@@ -1,6 +1,9 @@
 <script lang="ts">
+	import LoginForm from '$lib/components/loginform/login-form.svelte';
     import type { PageProps } from './$types';
 
     let { data }: PageProps = $props();
 </script>
-<h1>Sign In Page</h1>
+<div class="flex h-screen w-full items-center justify-center px-4">
+  <LoginForm />
+</div>
