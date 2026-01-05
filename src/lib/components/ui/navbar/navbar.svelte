@@ -5,12 +5,13 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { scrollY } from 'svelte/reactivity/window';
 	import Modetoggle from '../modetoggle/modetoggle.svelte';
+	import { page } from '$app/state';
 
 	let menuItems = [
-		{ name: 'Dashboard', href: '#a' },
-		{ name: 'Features', href: '#a' },
-		{ name: 'Pricing', href: '#a' },
-		{ name: 'About', href: '#a' }
+		{ name: 'Dashboard', href: '/dashboard' },
+		{ name: 'Features', href: '/features' },
+		{ name: 'Pricing', href: '/pricing' },
+		{ name: 'About', href: '/about' }
 	];
 	let menuState = $state(false);
 	let isScrolled = $derived.by(() => {
@@ -84,7 +85,7 @@
 						<ul class="flex gap-1">
 							{#each menuItems as item, index}
 								<li>
-									<Button variant="ghost" size="sm">
+									<Button variant={page.url.pathname === item.href ? "default" : "ghost"} size="sm">
 										<a href={item.href} class="text-base">
 											<span>{item.name}</span>
 										</a>
@@ -117,9 +118,17 @@
 							variant="ghost"
 							size="sm"
 							class={cn(isScrolled && 'lg:hidden', 'rounded-full')}
-							href="#"
+							href="/signin"
 						>
 							Login
+						</Button>
+						<Button
+							href="/signup"
+							size="sm"
+							variant="default"
+							class={cn(isScrolled && 'lg:hidden', 'rounded-full')}
+						>
+							Sign Up
 						</Button>
 						<Button
 							href="#"
@@ -127,7 +136,7 @@
 							variant="default"
 							class={cn(isScrolled && 'lg:hidden', 'rounded-full')}
 						>
-							Sign Up
+							Logout
 						</Button>
 						<Button size="sm" class={cn(isScrolled ? 'lg:inline-flex' : 'hidden')} href="#">
 							<span>Get Started</span>
