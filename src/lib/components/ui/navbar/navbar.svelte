@@ -102,17 +102,6 @@
 											</a>
 										</Button>
 									</li>
-								{:else}
-									<li>
-										<Button
-											variant={page.url.pathname === item.href ? 'default' : 'ghost'}
-											size="sm"
-										>
-											<a href={item.href} class="text-base">
-												<span>{item.name}</span>
-											</a>
-										</Button>
-									</li>
 								{/if}
 							{/each}
 						</ul>
@@ -125,14 +114,16 @@
 					<div class="lg:hidden">
 						<ul class="space-y-6 text-base">
 							{#each menuItems as item, index}
-								<li>
-									<a
-										href={item.href}
-										class="block text-muted-foreground duration-150 hover:text-accent-foreground"
-									>
-										<span>{item.name}</span>
-									</a>
-								</li>
+								{#if !item.protected || (item.protected && $authStore.isAuthenticated)}
+									<li>
+										<a
+											href={item.href}
+											class="block text-muted-foreground duration-150 hover:text-accent-foreground"
+										>
+											<span>{item.name}</span>
+										</a>
+									</li>
+								{/if}
 							{/each}
 						</ul>
 					</div>
