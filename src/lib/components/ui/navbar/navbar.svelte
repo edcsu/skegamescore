@@ -6,7 +6,11 @@
 	import { scrollY } from 'svelte/reactivity/window';
 	import Modetoggle from '../modetoggle/modetoggle.svelte';
 	import { page } from '$app/state';
+	import authStore from '$lib/stores/auth.store';
 
+	authStore.subscribe((value) => {
+		// You can use the user data here if needed
+	});
 	let menuItems = [
 		{ name: 'Dashboard', href: '/dashboard' },
 		{ name: 'Features', href: '/features' },
