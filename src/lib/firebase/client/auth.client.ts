@@ -23,7 +23,7 @@ export async function registerUser({ email, password }: { email: string; passwor
     }
 }
 
-export async function addUserToFirestore(user : User) {
+export async function addUserToFirestore(user: User) {
     try {
         const newUser = {
             uid: user.uid,
@@ -38,7 +38,23 @@ export async function addUserToFirestore(user : User) {
     }
 }
 
-
 export async function authRedirect(url: string, userId: string) {
     await goto(url)
+}
+
+export async function loginUser({ email, password }: { email: string; password: string }) {
+    try {
+        const request = await signInWithEmailAndPassword(AUTH, email, password);
+        toast.success("Login successful!", {
+            description: "You have successfully logged in.",
+        });
+        await authRedirect("/", request.user.uid);
+    } catch (error: any) {
+        toast.error("Login failed!", {
+            description: errorCodes(error.code),
+        });
+        throw new Error(error);
+    } finally {
+
+    }
 }

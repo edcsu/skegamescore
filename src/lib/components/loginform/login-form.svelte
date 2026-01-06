@@ -14,11 +14,11 @@
 	import type { FormSchema } from './loginschema';
 	import { formSchema } from './loginschema';
 	import FieldError from '../ui/field/field-error.svelte';
-	import { registerUser } from '$lib/firebase/client/auth.client';
+	import { loginUser, registerUser } from '$lib/firebase/client/auth.client';
 	import Spinner from '../ui/spinner/spinner.svelte';
 
 	let { formType } = $props();
-	let isLoading = false;
+	let isLoading = $state(false);
 
 	const { form, errors } = createForm<FormSchema>({
 		// ...
@@ -34,7 +34,7 @@
 		if (formType === 'signup') {
 			await registerUser(values);
 		} else {
-			console.log('Form submitted:', values);
+			await loginUser(values);
 		}
 		isLoading = false;
 	};
@@ -84,8 +84,8 @@
 				<Field>
 					<Button type="submit" class="w-full" disabled={isLoading}>
 						{#if isLoading}
-							 <Spinner />
-    						Submitting...
+							<Spinner />
+							Submitting...
 						{:else}
 							Submit
 						{/if}
