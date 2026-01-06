@@ -11,7 +11,7 @@
 
 	authStore.subscribe((value) => {
 		// You can use the user data here if needed
-		console.log('User data updated:', value);
+		// console.log('User data updated:', value);
 	});
 	let menuItems = [
 		{ name: 'Home', href: '/', protected: false },
@@ -164,7 +164,7 @@
 								Sign Up
 							</Button>
 						{/if}
-						<Modetoggle className={cn(isScrolled && 'lg:hidden', 'rounded-full w-full')} />
+						<Modetoggle className={cn(isScrolled && 'lg:hidden')} />
 					</div>
 				</div>
 			</div>
