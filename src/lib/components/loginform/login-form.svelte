@@ -13,27 +13,30 @@
 	import { createForm } from 'felte';
 	import type { FormSchema } from './loginschema';
 	import { formSchema } from './loginschema';
+	import FieldError from '../ui/field/field-error.svelte';
+	import { registerUser } from '$lib/firebase/client/auth.client';
+	import Spinner from '../ui/spinner/spinner.svelte';
 
-	let formType: 'login' | 'signup' = 'login';
+	let { formType } = $props();
 	let isLoading = false;
 
 	const { form, errors } = createForm<FormSchema>({
 		// ...
 		extend: validator({ schema: formSchema }), // OR `extend: [validator],`
 
-		onSubmit(values: FormSchema, context: any) {
-			handleSubmit(values);
-			context.resetForm();
+		async onSubmit(values: FormSchema, context: any) {
+			await handleSubmit(values);
 		}
 	});
 
-	const handleSubmit = (values: FormSchema) => {
+	const handleSubmit = async (values: FormSchema) => {
 		isLoading = true;
-		if (formType) {
-			console.log('Form submitted:', values);
+		if (formType === 'signup') {
+			await registerUser(values);
 		} else {
 			console.log('Form submitted:', values);
 		}
+		isLoading = false;
 	};
 </script>
 
@@ -49,19 +52,44 @@
 	<Card.Content>
 		<form use:form>
 			<FieldGroup>
-				<Field>
+				<Field data-invalid={$errors.email ? true : false}>
 					<FieldLabel for="email-{id}">Email</FieldLabel>
-					<Input id="email-{id}" type="email" placeholder="m@example.com" required />
+					<Input
+						id="email-{id}"
+						name="email"
+						type="email"
+						placeholder="m@example.com"
+						aria-invalid={$errors.email ? true : false}
+					/>
+					{#if $errors.email}
+						<FieldError>{$errors.email}</FieldError>
+					{/if}
 				</Field>
-				<Field>
+				<Field data-invalid={$errors.password ? true : false}>
 					<div class="flex items-center">
 						<FieldLabel for="password-{id}">Password</FieldLabel>
 						<a href="##" class="ms-auto inline-block text-sm underline"> Forgot your password? </a>
 					</div>
-					<Input id="password-{id}" type="password" required />
+					<Input
+						id="password-{id}"
+						name="password"
+						type="password"
+						autocomplete=""
+						aria-invalid={$errors.password ? true : false}
+					/>
+					{#if $errors.password}
+						<FieldError>{$errors.password}</FieldError>
+					{/if}
 				</Field>
 				<Field>
-					<Button type="submit" class="w-full">Submit</Button>
+					<Button type="submit" class="w-full" disabled={isLoading}>
+						{#if isLoading}
+							 <Spinner />
+    						Submitting...
+						{:else}
+							Submit
+						{/if}
+					</Button>
 					<Button variant="outline" class="w-full">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 							<path

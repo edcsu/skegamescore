@@ -21,7 +21,6 @@ const firebaseConfig = {
     appId: PUBLIC_FirebaseAppId,
     measurementId: PUBLIC_FirebaseMeasurementId
 };
-
 if (getApps().length === 0) {
     const app = initializeApp(firebaseConfig as FirebaseOptions);
 }
