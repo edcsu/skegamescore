@@ -74,3 +74,19 @@ export async function logoutUser() {
     } finally {
     }
 }
+
+export async function setAccessToken(){
+    /// GET USER TOKEN and EMAIL
+    const user = AUTH.currentUser;
+    if(!user){
+        return;
+    }
+    /// REFRESH
+    const token = await user.getIdToken(true);
+
+    /// POST TO SERVER to validate and set cookies
+    await fetch('/api/auth/token',{
+        method:'POST',
+        body:JSON.stringify({token,email:user.email})
+    })
+}
