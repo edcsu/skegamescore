@@ -39,6 +39,7 @@ export async function addUserToFirestore(user: User) {
 }
 
 export async function authRedirect(url: string, userId: string) {
+    await setAccessToken()
     await goto(url)
 }
 
