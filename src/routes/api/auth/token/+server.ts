@@ -18,3 +18,8 @@ export const POST: RequestHandler = async ({ request: any, cookies: any }) => {
         return json({ message: 'Bad token' }, { status: 403 })
     }
 };
+
+export const GET: RequestHandler = async ({ cookies }) => {
+    cookies.delete('SGS-T', { path: '/' })
+    return json({ message: 'scucess' }, { status: 200 })
+}

@@ -63,10 +63,11 @@ export async function loginUser({ email, password }: { email: string; password: 
 export async function logoutUser() {
     try {
         await signOut(AUTH);
+        await fetch("/api/auth/token")
         toast.success("Logout successful!", {
             description: "You have successfully logged out.",
         });
-        await authRedirect("/login", "");
+        await authRedirect("/", "");
     } catch (error: any) {
         toast.error("Logout failed!", {
             description: errorCodes(error.code),
