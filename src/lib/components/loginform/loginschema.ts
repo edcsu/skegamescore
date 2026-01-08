@@ -2,8 +2,8 @@ import { z } from "zod";
 import type { email } from "zod/v4";
 
 export const formSchema = z.object({
-    email: z.string().email().min(2).max(50),
-    password: z.string().min(6).max(50)
+    email: z.string().email("Invalid email address").max(50, "Email must be at most 50 characters long"),
+    password: z.string().min(6, "Password must be at least 6 characters long").max(50, "Password must be at most 50 characters long")
 });
 
 export type FormSchema = typeof formSchema;

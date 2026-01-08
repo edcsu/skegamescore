@@ -61,9 +61,9 @@
 						placeholder="m@example.com"
 						aria-invalid={$errors.email ? true : false}
 					/>
-					{#if $errors.email}
-						<FieldError>{$errors.email}</FieldError>
-					{/if}
+					{#each $errors.email as error}
+						<FieldError>{error}</FieldError>	
+					{/each}
 				</Field>
 				<Field data-invalid={$errors.password ? true : false}>
 					<div class="flex items-center">
@@ -77,9 +77,9 @@
 						autocomplete=""
 						aria-invalid={$errors.password ? true : false}
 					/>
-					{#if $errors.password}
-						<FieldError>{$errors.password}</FieldError>
-					{/if}
+					{#each $errors.password as error}
+						<FieldError>{error}</FieldError>
+					{/each}
 				</Field>
 				<Field>
 					<Button type="submit" class="w-full" disabled={isLoading}>
