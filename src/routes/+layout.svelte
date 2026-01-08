@@ -7,12 +7,14 @@
 	import type { LayoutProps } from './$types';
 	import { onMount } from 'svelte';
 	import LayoutSkeleton from '$lib/components/layout-skeleton.svelte';
+	import { setAccessToken } from '$lib/firebase/client/auth.client';
 
 	let { data, children }: LayoutProps = $props();
 	let loading = $state(true);
 
 	onMount(async () => {
 		const user = await data.getAuthUser();
+		await setAccessToken();
 		loading = false;
 	});
 
