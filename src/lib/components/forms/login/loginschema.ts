@@ -1,5 +1,4 @@
 import { z } from "zod";
-import type { email } from "zod/v4";
 
 export const formSchema = z.object({
     email: z.string().email("Invalid email address").max(50, "Email must be at most 50 characters long"),

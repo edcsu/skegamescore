@@ -5,6 +5,9 @@
 	import Profile from './profile.svelte';
 	import Articles from './articles.svelte';
 	import CreateArticle from './create-article.svelte';
+
+    let { form } = $props();
+
 </script>
 
 <div class="max-w-8xl mx-auto space-y-3 px-12 py-6 md:space-y-6">
@@ -37,7 +40,7 @@
             <Articles />
         </Tabs.Content>
 		<Tabs.Content value="create">
-            <CreateArticle />
+            <CreateArticle { form }/>
         </Tabs.Content>
 	</Tabs.Root>
 </div>

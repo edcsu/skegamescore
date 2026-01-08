@@ -6,16 +6,16 @@
 		FieldGroup,
 		Field,
 		FieldLabel,
-		FieldDescription
+		FieldDescription,
+		FieldError
 	} from '$lib/components/ui/field/index.js';
 	const id = $props.id();
 	import { validator } from '@felte/validator-zod';
 	import { createForm } from 'felte';
 	import type { FormSchema } from './loginschema';
 	import { formSchema } from './loginschema';
-	import FieldError from '../ui/field/field-error.svelte';
 	import { loginUser, registerUser } from '$lib/firebase/client/auth.client';
-	import Spinner from '../ui/spinner/spinner.svelte';
+	import Spinner from '$lib/components/ui/spinner/spinner.svelte';
 
 	let { formType } = $props();
 	let isLoading = $state(false);
@@ -43,11 +43,11 @@
 <Card.Root class="mx-auto w-full max-w-sm">
 	<Card.Header>
 		<Card.Title class="text-2xl">{formType === 'login' ? 'Login' : 'Sign Up'}</Card.Title>
-		<Card.Description
-			>{formType === 'login'
+		<Card.Description>
+			{formType === 'login'
 				? 'Enter your email below to login to your account'
-				: 'Enter your email below to create a new account'}</Card.Description
-		>
+				: 'Enter your email below to create a new account'}
+		</Card.Description>
 	</Card.Header>
 	<Card.Content>
 		<form use:form>
@@ -62,7 +62,7 @@
 						aria-invalid={$errors.email ? true : false}
 					/>
 					{#each $errors.email as error}
-						<FieldError>{error}</FieldError>	
+						<FieldError>{error}</FieldError>
 					{/each}
 				</Field>
 				<Field data-invalid={$errors.password ? true : false}>

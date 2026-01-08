@@ -1,8 +1,9 @@
 <script lang="ts">
 	import Dashboardtabs from '$lib/components/dashboard/dashboardtabs.svelte';
-    import type { PageProps } from './$types';
+	import type { PageProps, ActionData  } from './$types';
+	let { data, form }: PageProps = $props();
+    console.log("CreateArticle form:", $form);
 
-    let { data }: PageProps = $props();
 </script>
 
-<Dashboardtabs />
+<Dashboardtabs {form} />
