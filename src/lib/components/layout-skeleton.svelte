@@ -2,9 +2,9 @@
 	import { Skeleton } from '$lib/components/ui/skeleton/index.js';
 </script>
 
-<div class="max-w-8xl mx-auto space-y-3 px-6 md:space-y-6">
+<div class="max-w-12xl mx-auto space-y-3 px-6 md:space-y-6 py-4">
 	<div class="space-y-2">
-		<Skeleton class="h-10 w-96" />
+		<Skeleton class="h-10 w-full" />
 	</div>
-	<Skeleton class="h-31.25 w-96 rounded-xl" />
+	<Skeleton class="h-[80vh] w-full rounded-xl" />
 </div>
