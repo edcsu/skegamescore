@@ -4,13 +4,28 @@
 	import { ModeWatcher } from 'mode-watcher';
 	import Navbar from '$lib/components/ui/navbar/navbar.svelte';
 	import { Toaster } from '$lib/components/ui/sonner';
-	let { children } = $props();
+	import type { LayoutProps } from './$types';
+	import { onMount } from 'svelte';
+	import LayoutSkeleton from '$lib/components/layout-skeleton.svelte';
+
+	let { data, children }: LayoutProps = $props();
+	let loading = $state(true);
+
+	onMount(async () => {
+		const user = await data.getAuthUser();
+		loading = false;
+	});
+
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 <ModeWatcher />
+{#if loading}
+	<LayoutSkeleton />
+{:else}
 <main>
 	<Navbar />
 	{@render children()}
 	<Toaster />
 </main>
+{/if}
