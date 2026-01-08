@@ -2,7 +2,7 @@
 	import { Skeleton } from '$lib/components/ui/skeleton/index.js';
 </script>
 
-<div class="flex flex-col space-y-2">
+<div class="max-w-8xl mx-auto space-y-3 px-6 md:space-y-6">
 	<div class="space-y-2">
 		<Skeleton class="h-10 w-96" />
 	</div>
