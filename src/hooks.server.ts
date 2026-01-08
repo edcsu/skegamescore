@@ -1,4 +1,4 @@
-import { getAuthUser } from "$lib/helpers/app.server";
+import { getAuthUser, guardedRoutes } from "$lib/helpers/app.server";
 import { sequence } from "@sveltejs/kit/hooks";
 
 const Auth = async ({ event, resolve }) => {
@@ -12,5 +12,10 @@ const Auth = async ({ event, resolve }) => {
     return response;
 }
 
+const RouteGuards = async ({ event, resolve }) => {
+    await guardedRoutes(event);
+    const response = await resolve(event);
+    return response;
+}
 
-export const handle = sequence(Auth);
+export const handle = sequence(Auth, RouteGuards);
