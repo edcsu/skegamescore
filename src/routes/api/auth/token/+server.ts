@@ -2,7 +2,7 @@ import { AUTH } from '$lib/firebase/server/firebase.server';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async ({ request: any, cookies: any }) => {
+export const POST: RequestHandler = async ({ request, cookies }) => {
     try {
         const { token, email } = await request.json()
         const verify = await AUTH.verifyIdToken(token ?? '', true)
