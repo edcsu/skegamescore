@@ -39,6 +39,7 @@ export async function addUserToFirestore(user: User) {
 }
 
 export async function authRedirect(url: string, userId: string) {
+    await setAccessToken()
     await goto(url)
 }
 
@@ -62,10 +63,11 @@ export async function loginUser({ email, password }: { email: string; password: 
 export async function logoutUser() {
     try {
         await signOut(AUTH);
+        await fetch("/api/auth/token")
         toast.success("Logout successful!", {
             description: "You have successfully logged out.",
         });
-        await authRedirect("/login", "");
+        await authRedirect("/", "");
     } catch (error: any) {
         toast.error("Logout failed!", {
             description: errorCodes(error.code),
@@ -73,4 +75,20 @@ export async function logoutUser() {
         throw new Error(error);
     } finally {
     }
+}
+
+export async function setAccessToken(){
+    /// GET USER TOKEN and EMAIL
+    const user = AUTH.currentUser;
+    if(!user){
+        return;
+    }
+    /// REFRESH
+    const token = await user.getIdToken(true);
+
+    /// POST TO SERVER to validate and set cookies
+    await fetch('/api/auth/token',{
+        method:'POST',
+        body:JSON.stringify({token,email:user.email})
+    })
 }
