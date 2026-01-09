@@ -45,13 +45,13 @@
 					/>
 				</Field>
 				<Field>
-					<FieldLabel for="game-description-{id}">Game Description</FieldLabel>
+					<FieldLabel for="description-{id}">Game Description</FieldLabel>
 					<Textarea
-						id="game-description-{id}"
+						id="description-{id}"
 						placeholder="Share your thoughts about the game..."
 						rows={4}
-						name="gamedescription"
-						value={articleform?.gamedescription || ''}
+						name="description"
+						value={articleform?.description || ''}
 					/>
 					<FieldDescription>Share your thoughts about the game.</FieldDescription>
 				</Field>
