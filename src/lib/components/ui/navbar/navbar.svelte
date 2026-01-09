@@ -94,7 +94,7 @@
 								{#if !item.protected || (item.protected && $authStore.isAuthenticated)}
 									<li>
 										<Button
-											variant={page.url.pathname === item.href ? 'default' : 'ghost'}
+											variant={item.protected ? page.url.pathname.match(item.href) ? 'default' : 'ghost' : page.url.pathname === item.href ? 'default' : 'ghost'}
 											size="sm"
 										>
 											<a href={item.href} class="text-base">

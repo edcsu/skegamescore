@@ -13,7 +13,7 @@
 					class="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
 					tooltipContent="create article"
 				>
-					<a href="/dashboard/articles/new" class="flex items-center gap-2">
+					<a href="/dashboard/create" class="flex items-center gap-2">
 						<CirclePlusIcon class="size-5!" />
 						<span class="text-base font-semibold">New Article</span>
 					</a>
