@@ -1,9 +1,9 @@
 import z, { success } from "zod/v4";
 
 const articleSchema = z.object({
-    gametitle: z.string().min(1, "Game title is required").max(100, "Game title must be at most 100 characters long"),
-    articletitle: z.string().min(5, "Article title is required").max(100, "Article title must be at most 100 characters long"),
-    description: z.string().min(10, "Game description is required").max(500, "Game description must be at most 500 characters long"),
+    gametitle: z.string().min(1, "Game title is required").max(80, "Game title must be at most 80 characters long"),
+    articletitle: z.string().min(5, "Article title is required").max(80, "Article title must be at most 80 characters long"),
+    description: z.string().min(10, "Game description is required").max(2000, "Game description must be at most 2000 characters long"),
     rating: z.coerce.number().min(1, "Rating must be at least 1").max(5, "Rating must be at most 5")
 });
 
