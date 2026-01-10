@@ -23,7 +23,7 @@
 				icon: CircleUserIcon,
 			},
 			{
-				title: "Articles",
+				title: "My articles",
 				url: "/dashboard/articles",
 				icon: NewspaperIcon,
 			}
