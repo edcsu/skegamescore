@@ -11,3 +11,12 @@ export const createArticle = async (article:any, userId: string) => {
     });
     return newArticle;
 }
+
+export const getUserArticles = async (userId: string) => {
+    const userArticlesSnapshot = await articlesCollection
+        .where('authorId', '==', userId)
+        .orderBy('created_at', 'desc')
+        .get(); 
+    const userArticles = userArticlesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return userArticles;
+}
