@@ -5,13 +5,12 @@ import { getArticleById, updateArticle } from '$lib/firebase/server/article.serv
 
 export const load = (async ({ locals, params }) => {
     const { article, author} = await getArticleById(params.id);
-    console.log(article, author);
     if (!article) {
-        throw error(404, 'No article found');
+        throw error(404, { message: 'No article found'});
     }
 
     if (!author) {
-        throw error(404, 'No author found');
+        throw error(404, { message: 'No author found'});
     }
 
     if (author.uid !== locals.user.id) {

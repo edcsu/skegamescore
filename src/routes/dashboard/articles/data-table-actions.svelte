@@ -24,7 +24,7 @@
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
 		<DropdownMenu.Item>
-			<a href={`/dashboard/view/${id}`}> View article </a>
+			<a href={`/article/${id}`}> View article </a>
 		</DropdownMenu.Item>
 		<DropdownMenu.Item>
 			<a href={`/dashboard/edit/${id}`}> Edit article </a>
