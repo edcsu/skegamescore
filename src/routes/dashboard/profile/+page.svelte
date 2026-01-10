@@ -1,10 +1,12 @@
 <script lang="ts">
-    import type { PageProps } from './$types';
-    import SiteHeader from '$lib/components/site-header.svelte';
+	import type { PageProps } from './$types';
+	import SiteHeader from '$lib/components/site-header.svelte';
 	import ProfileForm from '$lib/components/forms/profile/profile-form.svelte';
+	import { toast } from 'svelte-sonner';
 
-    let { data, form }: PageProps = $props();
+	let { data, form }: PageProps = $props();
 </script>
+
 <SiteHeader title="Profile" />
 <div class="flex flex-1 flex-col">
 	<div class="@container/main flex flex-1 flex-col gap-2">

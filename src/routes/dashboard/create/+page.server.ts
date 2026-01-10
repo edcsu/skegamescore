@@ -11,7 +11,6 @@ export const actions = {
     default: async ({ request, locals }) => {
         const formData = await request.formData();
         const article = await schemaValidation(formData);
-        console.log(article?.error?.properties?.gametitle?.errors);
 
         if (!article.success) {
             return fail(400, article);
