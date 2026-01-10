@@ -1,3 +1,4 @@
+import type { Article } from "../../../routes/dashboard/articles/columns";
 import { DB } from "./firebase.server";
 import admin from "firebase-admin";
 
@@ -17,6 +18,6 @@ export const getUserArticles = async (userId: string) => {
         .where('authorId', '==', userId)
         .orderBy('created_at', 'desc')
         .get(); 
-    const userArticles = userArticlesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const userArticles = userArticlesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Article[];
     return userArticles;
 }
