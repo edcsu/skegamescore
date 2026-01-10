@@ -34,11 +34,13 @@ export default {
         setLoading(true);
         const data = await getHomeArticles(4);
         updateArticles(data);
+        setLoading(false);
     },
     loadMoreHomeArticles: async (oldVisible: QueryDocumentSnapshot<DocumentData, DocumentData>) => { 
         setLoading(true);
         const data = await getMoreHomeArticles(oldVisible, 4);
         if (data)
         updateArticles(data);
+        setLoading(false);
     },
 }
