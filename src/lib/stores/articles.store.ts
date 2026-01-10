@@ -1,11 +1,11 @@
-import { getHomeArticles } from "$lib/firebase/client/articles.client";
+import { getHomeArticles, getMoreHomeArticles } from "$lib/firebase/client/articles.client";
 import type { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 import { writable } from "svelte/store";
 import type { Article } from "../../routes/dashboard/articles/columns";
 
 const articlesStore = writable({
     articles: [] as Article[],
-    lastVisible: {},
+    lastVisible: {} as QueryDocumentSnapshot<DocumentData, DocumentData>,
     loading: false,
     error: null
 });
@@ -35,5 +35,10 @@ export default {
         const data = await getHomeArticles(4);
         updateArticles(data);
     },
-    loadMoreHomeArticles: async (limit = 10) => { },
+    loadMoreHomeArticles: async (oldVisible: QueryDocumentSnapshot<DocumentData, DocumentData>) => { 
+        setLoading(true);
+        const data = await getMoreHomeArticles(oldVisible, 4);
+        if (data)
+        updateArticles(data);
+    },
 }

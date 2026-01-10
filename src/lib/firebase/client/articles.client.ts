@@ -1,4 +1,4 @@
-import { collection, getDocs, limit, orderBy, query, QuerySnapshot, type DocumentData } from "firebase/firestore";
+import { collection, getDocs, limit, orderBy, query, QueryDocumentSnapshot, QuerySnapshot, startAfter, type DocumentData } from "firebase/firestore";
 import { DB } from "./config.client";
 import type { Article } from "../../../routes/dashboard/articles/columns";
 
@@ -16,12 +16,15 @@ export const getHomeArticles = async (articleLimit = 10) => {
     }
 }
 
-export const getMoreHomeArticles = async (lastVisible: any, articleLimit = 10) => {
+export const getMoreHomeArticles = async (lastVisible: QueryDocumentSnapshot<DocumentData, DocumentData>, articleLimit = 10) => {
     try {
-        const q = query(articlesCollection, orderBy('created_at', 'desc'), limit(articleLimit));
-        const querySnapshot = await getDocs(q);
-        const articles = await getMoreHelper(querySnapshot);
-        return articles;
+        if (lastVisible) {
+            const q = query(articlesCollection, orderBy('created_at', 'desc'), startAfter(lastVisible), limit(articleLimit));
+            const querySnapshot = await getDocs(q);
+            const articles = await getMoreHelper(querySnapshot);
+            return articles;
+        }
+
     } catch (error: any) {
         throw new Error(error);
     }
