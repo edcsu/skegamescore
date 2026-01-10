@@ -119,7 +119,7 @@
 						: 'false'}
 				>
 					<FieldLabel for="rating-{id}">Rating</FieldLabel>
-					<Select.Root type="single" value={articleform?.rating || ''} name="rating">
+					<Select.Root type="single" value={articleform?.rating} name="rating">
 						<Select.Trigger
 							class=""
 							aria-invalid={articleform?.error?.properties?.rating?.errors ||
@@ -127,14 +127,16 @@
 								? 'true'
 								: 'false'}
 						>
-							{articleform?.rating || ''}
+							Select a rating
 						</Select.Trigger>
 						<Select.Content>
-							<Select.Item value="1">1</Select.Item>
-							<Select.Item value="2">2</Select.Item>
-							<Select.Item value="3">3</Select.Item>
-							<Select.Item value="4">4</Select.Item>
-							<Select.Item value="5">5</Select.Item>
+							<Select.Group>
+								<Select.Item value="1">1</Select.Item>
+								<Select.Item value="2">2</Select.Item>
+								<Select.Item value="3">3</Select.Item>
+								<Select.Item value="4">4</Select.Item>
+								<Select.Item value="5">5</Select.Item>
+							</Select.Group>
 						</Select.Content>
 					</Select.Root>
 					<FieldDescription>Rate the game from 1 to 5.</FieldDescription>
