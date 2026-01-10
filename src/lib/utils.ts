@@ -19,3 +19,11 @@ export function isServer() {
 export function isClient() {
   return !import.meta.env.SSR;
 }
+
+export type AppUser = {
+  uid: string,
+  email: string,
+  firstname: string,
+  lastname: string,
+  isAdmin: boolean
+}
