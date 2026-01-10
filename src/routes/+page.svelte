@@ -6,11 +6,7 @@
 	import * as Card from '$lib/components/ui/card/index.js';
 	import { Spinner } from '$lib/components/ui/spinner';
 
-	articlesStore.subscribe((value) => {
-		console.log('Articles Store Updated:', value);
-	});
-
-	onMount(async () => {
+ 	onMount(async () => {
 		if (!$articlesStore.articles?.length) {
 			await articlesStore.getHomeArticles();
 		}
