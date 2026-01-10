@@ -23,7 +23,11 @@
 			</DropdownMenu.Item>
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
-		<DropdownMenu.Item>View article</DropdownMenu.Item>
-		<DropdownMenu.Item>Edit article</DropdownMenu.Item>
+		<DropdownMenu.Item>
+			<a href={`/dashboard/view/${id}`}> View article </a>
+		</DropdownMenu.Item>
+		<DropdownMenu.Item>
+			<a href={`/dashboard/edit/${id}`}> Edit article </a>
+		</DropdownMenu.Item>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
