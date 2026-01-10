@@ -1,5 +1,5 @@
 import schemaValidation from '$lib/components/forms/profile/profile.schema';
-import { getUserById } from '$lib/firebase/server/users.server';
+import { getUserById, updateUserProfile } from '$lib/firebase/server/users.server';
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -20,7 +20,13 @@ export const actions = {
         if (!profile.success) {
             return fail(400, profile);
         }
-        // await updateUserProfile(locals.user.id, { firstname, lastname });
+
+        if(!profile.data)
+        {
+            return fail(422, { success: false, error: { message: 'Profile data is invalid' } });
+        }
+
+        await updateUserProfile(locals.user.id, profile.data);
         return { success: true };
     }
 } satisfies Actions;

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { SquarePenIcon } from '@lucide/svelte';
-	import * as StarRating from '$lib/components/ui/star-rating';
 	import type { PageProps } from '../$types';
+	import ArticleRating from '$lib/components/article-rating.svelte';
 
 	let { data }: PageProps = $props();
 </script>
@@ -39,13 +39,7 @@
 						<span class="">on {data.article.created_at}</span>
 					</span>
 					<span class="">
-						<StarRating.Root value={Number(data.article.rating)} readonly>
-							{#snippet children({ items })}
-								{#each items as item (item.index)}
-									<StarRating.Star {...item} />
-								{/each}
-							{/snippet}
-						</StarRating.Root>
+						<ArticleRating rating={data.article.rating} />
 					</span>
 				</div>
 			</div>

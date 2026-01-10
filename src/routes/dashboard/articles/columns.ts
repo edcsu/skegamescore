@@ -1,6 +1,7 @@
 import type { ColumnDef } from "@tanstack/table-core";
 import { renderComponent } from "$lib/components/ui/data-table/index.js";
 import DataTableActions from "./data-table-actions.svelte";
+import ArticleRating from '$lib/components/article-rating.svelte';
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -29,6 +30,9 @@ export const columns: ColumnDef<Article>[] = [
     {
         accessorKey: "rating",
         header: "Rating",
+        cell: ({ row }) => {
+            return renderComponent(ArticleRating, { rating: Number(row.original.rating) });
+        },
     },
     {
         accessorKey: "created_at",

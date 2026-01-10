@@ -5,6 +5,11 @@
 	import { toast } from 'svelte-sonner';
 
 	let { data, form }: PageProps = $props();
+	$effect(() => {
+		if (form && form?.success === true) {
+			toast.success('Profile updated successfully');
+		}
+	});
 </script>
 
 <SiteHeader title="Profile" />
