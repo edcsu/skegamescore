@@ -21,16 +21,15 @@ export const load = (async ({ locals, params }) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-    default: async ({ request, locals }) => {
+    default: async ({ request, locals, params }) => {
         const formData = await request.formData();
         const article = await schemaValidation(formData);
-        console.log(article?.error?.properties?.gametitle?.errors);
 
         if (!article.success) {
             return fail(400, article);
         }
 
-        await updateArticle(article.data, locals.user.id);
+        await updateArticle(params.id, article.data, locals.user.id);
         
         throw redirect(303, '/dashboard/articles');
     }

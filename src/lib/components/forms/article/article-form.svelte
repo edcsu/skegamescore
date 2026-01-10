@@ -19,37 +19,50 @@
 	let { formType, articleform } = $props();
 	let isLoading = $state(false);
 	// The 'enhance' callback function
-    const submitEnhance: SubmitFunction = ({ formElement, data, cancel, submitter }) => {
-        isLoading = true; // Set loading state to true on submission
+	const submitEnhance: SubmitFunction = ({ formElement, data, cancel, submitter }) => {
+		isLoading = true; // Set loading state to true on submission
 
-        return async ({ update }) => {
-            isLoading = false; // Set loading state to false after completion
-            await update(); // Wait for the UI update after the server action
-        }
-    };
-	const rating = $derived(articleform?.rating || '');
+		return async ({ update }) => {
+			await update(); // Wait for the UI update after the server action
+			isLoading = false; // Set loading state to false after completion
+		};
+	};
 </script>
 
 <Card.Root class="mx-auto w-full max-w-lg">
 	<Card.Content>
 		<form use:enhance={submitEnhance} method="POST">
 			<FieldGroup>
-				<Field data-invalid={articleform?.error?.properties?.gametitle?.errors ? true : false}>
+				<Field
+					data-invalid={articleform?.error?.properties?.gametitle?.errors ||
+					articleform?.form?.error?.properties?.gametitle?.errors
+						? true
+						: false}
+				>
 					<FieldLabel for="game-title-{id}">Game title</FieldLabel>
 					<Input
 						id="game-title-{id}"
 						name="gametitle"
 						type="text"
 						value={articleform?.gametitle || ''}
-						aria-invalid={articleform?.error?.properties?.gametitle?.errors ? 'true' : 'false'}
+						aria-invalid={articleform?.error?.properties?.gametitle?.errors ||
+						articleform?.form?.error?.properties?.gametitle?.errors
+							? 'true'
+							: 'false'}
 					/>
-					{#each articleform?.error?.properties?.gametitle?.errors as err}
+					{#each articleform?.error?.properties?.gametitle?.errors || articleform?.form?.error?.properties?.gametitle?.errors as err}
 						<FieldError>{err}</FieldError>
 					{/each}
 				</Field>
 				<Field
-					data-invalid={articleform?.error?.properties?.articletitle?.errors ? true : false}
-					aria-invalid={articleform?.error?.properties?.articletitle?.errors ? 'true' : 'false'}
+					data-invalid={articleform?.error?.properties?.articletitle?.errors ||
+					articleform?.form?.error?.properties?.articletitle?.errors
+						? true
+						: false}
+					aria-invalid={articleform?.error?.properties?.articletitle?.errors ||
+					articleform?.form?.error?.properties?.articletitle?.errors
+						? 'true'
+						: 'false'}
 				>
 					<div class="flex items-center">
 						<FieldLabel for="article-title-{id}">Article title</FieldLabel>
@@ -59,15 +72,24 @@
 						name="articletitle"
 						type="text"
 						value={articleform?.articletitle || ''}
-						aria-invalid={articleform?.error?.properties?.articletitle?.errors ? 'true' : 'false'}
+						aria-invalid={articleform?.error?.properties?.articletitle?.errors ||
+						articleform?.form?.error?.properties?.articletitle?.errors
+							? 'true'
+							: 'false'}
 					/>
-					{#each articleform?.error?.properties?.articletitle?.errors as err}
+					{#each articleform?.error?.properties?.articletitle?.errors || articleform?.form?.error?.properties?.articletitle?.errors as err}
 						<FieldError>{err}</FieldError>
 					{/each}
 				</Field>
 				<Field
-					data-invalid={articleform?.error?.properties?.description?.errors ? true : false}
-					aria-invalid={articleform?.error?.properties?.description?.errors ? 'true' : 'false'}
+					data-invalid={articleform?.error?.properties?.description?.errors ||
+					articleform?.form?.error?.properties?.description?.errors
+						? true
+						: false}
+					aria-invalid={articleform?.error?.properties?.description?.errors ||
+					articleform?.form?.error?.properties?.description?.errors
+						? 'true'
+						: 'false'}
 				>
 					<FieldLabel for="description-{id}">Game Description</FieldLabel>
 					<Textarea
@@ -76,24 +98,36 @@
 						rows={4}
 						name="description"
 						value={articleform?.description || ''}
-						aria-invalid={articleform?.error?.properties?.description?.errors ? 'true' : 'false'}
+						aria-invalid={articleform?.error?.properties?.description?.errors ||
+						articleform?.form?.error?.properties?.description?.errors
+							? 'true'
+							: 'false'}
 					/>
 					<FieldDescription>Share your thoughts about the game.</FieldDescription>
-					{#each articleform?.error?.properties?.description?.errors as err}
+					{#each articleform?.error?.properties?.description?.errors || articleform?.form?.error?.properties?.description?.errors as err}
 						<FieldError>{err}</FieldError>
 					{/each}
 				</Field>
 				<Field
-					data-invalid={articleform?.error?.properties?.rating?.errors ? true : false}
-					aria-invalid={articleform?.error?.properties?.rating?.errors ? 'true' : 'false'}
+					data-invalid={articleform?.error?.properties?.rating?.errors ||
+					articleform?.form?.error?.properties?.rating?.errors
+						? true
+						: false}
+					aria-invalid={articleform?.error?.properties?.rating?.errors ||
+					articleform?.form?.error?.properties?.rating?.errors
+						? 'true'
+						: 'false'}
 				>
 					<FieldLabel for="rating-{id}">Rating</FieldLabel>
 					<Select.Root type="single" value={articleform?.rating || ''} name="rating">
 						<Select.Trigger
 							class=""
-							aria-invalid={articleform?.error?.properties?.rating?.errors ? 'true' : 'false'}
+							aria-invalid={articleform?.error?.properties?.rating?.errors ||
+							articleform?.form?.error?.properties?.rating?.errors
+								? 'true'
+								: 'false'}
 						>
-							{rating}
+							{articleform?.rating || ''}
 						</Select.Trigger>
 						<Select.Content>
 							<Select.Item value="1">1</Select.Item>
@@ -104,15 +138,15 @@
 						</Select.Content>
 					</Select.Root>
 					<FieldDescription>Rate the game from 1 to 5.</FieldDescription>
-					{#each articleform?.error?.properties?.rating?.errors as err}
+					{#each articleform?.error?.properties?.rating?.errors || articleform?.form?.error?.properties?.rating?.errors as err}
 						<FieldError>{err}</FieldError>
 					{/each}
 				</Field>
-				{#if articleform?.error?.errors?.length > 0}
+				{#if articleform?.error?.errors?.length || articleform?.form?.error?.errors?.length > 0}
 					<FormErrorAlert
 						title="There were some problems with your submission"
 						description="Please fix the following errors and try again."
-						errors={articleform.error.errors}
+						errors={articleform.error.errors || articleform.form.error.errors}
 					/>
 				{/if}
 				<Field>
