@@ -8,6 +8,7 @@
 	import { onMount } from 'svelte';
 	import LayoutSkeleton from '$lib/components/layout-skeleton.svelte';
 	import { setAccessToken } from '$lib/firebase/client/auth.client';
+	import Sitefooter from '$lib/components/ui/sitefooter/sitefooter.svelte';
 
 	let { data, children }: LayoutProps = $props();
 	let loading = $state(true);
@@ -29,5 +30,6 @@
 	<Navbar />
 	{@render children()}
 	<Toaster />
+	<Sitefooter />
 </main>
 {/if}
