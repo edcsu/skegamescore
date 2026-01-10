@@ -13,17 +13,26 @@
 	import { Textarea } from '$lib/components/ui/textarea/index.js';
 	const id = $props.id();
 	import Spinner from '$lib/components/ui/spinner/spinner.svelte';
-	import { enhance } from '$app/forms';
+	import { enhance, type SubmitFunction } from '$app/forms';
 	import FormErrorAlert from '../form-error-alert.svelte';
 
 	let { formType, articleform } = $props();
 	let isLoading = $state(false);
+	// The 'enhance' callback function
+    const submitEnhance: SubmitFunction = ({ formElement, data, cancel, submitter }) => {
+        isLoading = true; // Set loading state to true on submission
+
+        return async ({ update }) => {
+            isLoading = false; // Set loading state to false after completion
+            await update(); // Wait for the UI update after the server action
+        }
+    };
 	const rating = $derived(articleform?.rating || '');
 </script>
 
 <Card.Root class="mx-auto w-full max-w-lg">
 	<Card.Content>
-		<form use:enhance method="POST">
+		<form use:enhance={submitEnhance} method="POST">
 			<FieldGroup>
 				<Field data-invalid={articleform?.error?.properties?.gametitle?.errors ? true : false}>
 					<FieldLabel for="game-title-{id}">Game title</FieldLabel>
