@@ -172,7 +172,7 @@
 		</div> -->
 		<div class="mt-12 flex flex-wrap items-center justify-center border-t py-6">
 			<span class="text-muted-foreground text-center text-sm"
-				>© {new Date().getFullYear()} Ske gamer board, All rights reserved</span
+				>© {new Date().getFullYear()} Skegamescore, All rights reserved</span
 			>
 			<!-- <div class="order-first flex flex-wrap justify-center gap-6 text-sm md:order-last">
 				<a

@@ -17,7 +17,7 @@
 		{ name: 'Home', href: '/', protected: false },
 		{ name: 'Dashboard', href: '/dashboard', protected: true },
 		{ name: 'Features', href: '/features', protected: false },
-		{ name: 'Pricing', href: '/pricing', protected: false },
+		// { name: 'Pricing', href: '/pricing', protected: false },
 		{ name: 'About', href: '/about', protected: false }
 	];
 	let menuState = $state(false);
