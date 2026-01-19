@@ -6,12 +6,19 @@
 	import { scrollY } from 'svelte/reactivity/window';
 	import Modetoggle from '../modetoggle/modetoggle.svelte';
 	import { page } from '$app/state';
+	import authStore from '$lib/stores/auth.store';
+	import { logoutUser } from '$lib/firebase/client/auth.client';
 
+	authStore.subscribe((value) => {
+		// You can use the user data here if needed
+		// console.log('User data updated:', value);
+	});
 	let menuItems = [
-		{ name: 'Dashboard', href: '/dashboard' },
-		{ name: 'Features', href: '/features' },
-		{ name: 'Pricing', href: '/pricing' },
-		{ name: 'About', href: '/about' }
+		{ name: 'Home', href: '/', protected: false },
+		{ name: 'Dashboard', href: '/dashboard', protected: true },
+		{ name: 'Features', href: '/features', protected: false },
+		// { name: 'Pricing', href: '/pricing', protected: false },
+		{ name: 'About', href: '/about', protected: false }
 	];
 	let menuState = $state(false);
 	let isScrolled = $derived.by(() => {
@@ -84,13 +91,18 @@
 					<div class="m-auto hidden size-fit lg:block">
 						<ul class="flex gap-1">
 							{#each menuItems as item, index}
-								<li>
-									<Button variant={page.url.pathname === item.href ? "default" : "ghost"} size="sm">
-										<a href={item.href} class="text-base">
-											<span>{item.name}</span>
-										</a>
-									</Button>
-								</li>
+								{#if !item.protected || (item.protected && $authStore.isAuthenticated)}
+									<li>
+										<Button
+											variant={item.protected ? page.url.pathname.match(item.href) ? 'default' : 'ghost' : page.url.pathname === item.href ? 'default' : 'ghost'}
+											size="sm"
+										>
+											<a href={item.href} class="text-base">
+												<span>{item.name}</span>
+											</a>
+										</Button>
+									</li>
+								{/if}
 							{/each}
 						</ul>
 					</div>
@@ -102,46 +114,48 @@
 					<div class="lg:hidden">
 						<ul class="space-y-6 text-base">
 							{#each menuItems as item, index}
-								<li>
-									<a
-										href={item.href}
-										class="block text-muted-foreground duration-150 hover:text-accent-foreground"
-									>
-										<span>{item.name}</span>
-									</a>
-								</li>
+								{#if !item.protected || (item.protected && $authStore.isAuthenticated)}
+									<li>
+										<a
+											href={item.href}
+											class="block text-muted-foreground duration-150 hover:text-accent-foreground"
+										>
+											<span>{item.name}</span>
+										</a>
+									</li>
+								{/if}
 							{/each}
 						</ul>
 					</div>
 					<div class="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-						<Button
-							variant="ghost"
-							size="sm"
-							class={cn(isScrolled && 'lg:hidden', 'rounded-full')}
-							href="/signin"
-						>
-							Login
-						</Button>
-						<Button
-							href="/signup"
-							size="sm"
-							variant="default"
-							class={cn(isScrolled && 'lg:hidden', 'rounded-full')}
-						>
-							Sign Up
-						</Button>
-						<Button
-							href="#"
-							size="sm"
-							variant="default"
-							class={cn(isScrolled && 'lg:hidden', 'rounded-full')}
-						>
-							Logout
-						</Button>
-						<Button size="sm" class={cn(isScrolled ? 'lg:inline-flex' : 'hidden')} href="#">
-							<span>Get Started</span>
-						</Button>
-						<Modetoggle />
+						{#if $authStore.isAuthenticated}
+							<Button
+								size="sm"
+								variant="default"
+								class={cn(isScrolled && 'lg:hidden', 'rounded-full')}
+								onclick={() => logoutUser()}
+							>
+								Logout
+							</Button>
+						{:else}
+							<Button
+								variant="ghost"
+								size="sm"
+								class={cn(isScrolled && 'lg:hidden', 'rounded-full')}
+								href="/signin"
+							>
+								Login
+							</Button>
+							<Button
+								href="/signup"
+								size="sm"
+								variant="default"
+								class={cn(isScrolled && 'lg:hidden', 'rounded-full')}
+							>
+								Sign Up
+							</Button>
+						{/if}
+						<Modetoggle className={cn(isScrolled && 'lg:hidden')} />
 					</div>
 				</div>
 			</div>
